@@ -3,6 +3,7 @@ import cvxopt as cvxopt
 #from cvxopt import solvers
 import pylab as pl
 
+
 class svm:
     
     def __init__(self, kernel = 'linear', C = None, sigma=1., degree = 1, threshold=1e-5):
@@ -14,13 +15,14 @@ class svm:
         self.sigma = sigma
         self.degree = degree
         self.threshold = threshold
+        print(kernel,C,sigma,degree, threshold)
         
     def build_kernel(self, X):
         self.K = np.dot(X,X.T)
         if self.kernel == 'poly': 
             self.K = (1. + 1./self.sigma*self.K)**self.degree
         elif self.kernel == 'rbf':
-            self.xsquared = (np.diag(self.K)*np.ones((1, self.N))) # treba da bude 1, self.N
+            self.xsquared = (np.diag(self.K)*np.ones((1, self.N))) 
             
             b = np.ones((self.N, 1))
             self.K -= 0.5*(np.dot(self.xsquared, b) + np.dot(b, self.xsquared)) # ovde je bila greska u kodu, pogledaj originalni !!!
@@ -70,6 +72,7 @@ class svm:
                     for i in range (self.nsupport):
                         self.y[j] += self.lambdas[i] * self.targets[i] * K[j, i]
                     self.y[j] += self.b
+                    
                 if soft:
                     return self.y
                 else:
