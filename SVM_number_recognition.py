@@ -15,7 +15,7 @@ from SVM import svm
 class svm_num_recognition:
     def __init__(self, kernel = 'poly', C = 1, degree = 1, sigma = 1, threshold = 1e-5):
         self.kernel = kernel
-        if self.kernel == 'linear':
+        if self.kernel == 'linear':# od 18 do 24 linije mozda ne treba
             self.kernel = 'poly'
             self.degree = 1.
         self.C = C
@@ -66,10 +66,10 @@ class svm_num_recognition:
         true_negatives = 0
         false_positives = 0
         false_negatives = 0
-        total = 0;
+        
         for i in range (0, np.shape(classification)[0]):
             if(labels[i,number] == 1):
-                total=total+1
+               
                 
                 if(classification[i] == 1):
                     true_positives = true_positives + 1
@@ -87,6 +87,8 @@ class svm_num_recognition:
         confusion_matrix [1, 0]= false_negatives
         confusion_matrix [1, 1]= true_negatives
         print("confusion matrix for num:",number,"is\n", confusion_matrix)
+        print("accuracy = ", (true_positives+true_negatives)/np.shape(classification)[0])
+        
     def svm_validation(self, validation_images,validation_labels):
         if(np.shape(validation_labels)[0]!=np.shape(validation_images)[0]):
             print("size of label matrix and data_matrix are not the same!!")
@@ -114,8 +116,8 @@ class svm_num_recognition:
         self.confusion_matrix_func(classification = classification8, labels = validation_labels, number = 8)
         self.confusion_matrix_func(classification = classification9, labels = validation_labels, number = 9)
     
-    def svm_one_num_classification(self, number):
-        Ytest=np.reshape(number,(1,784))
+    def svm_one_num_classification(self, image):
+        Ytest=np.reshape(image, (1,784))
         classification0=self.sv0.classifier(Ytest,soft = False)
         classification1=self.sv1.classifier(Ytest,soft = False)
         classification2=self.sv2.classifier(Ytest,soft = False)
@@ -153,22 +155,7 @@ class svm_num_recognition:
 
 
         
-#sv = svm_num_recognition(kernel = 'poly', C = 1, degree = 3, sigma = 1, threshold = 1e-7)
-#mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
-#sv.svm_train(mnist.train.images[0:2000], mnist.train.labels[0:2000])
-#sv.svm_one_num_classification(mnist.test.images[15])
-#
-#columns = 1
-#rows = 10
-#fig=pt.figure(figsize=(28, 28))
-#for i in range (1, columns*rows +1):
-#    d=np.reshape(mnist.validation.images[i],(28,28))
-#    fig.add_subplot(rows, columns, i)
-#    pt.imshow(d,cmap='Greys_r')
-#pt.show()
-#
-#d=np.reshape(mnist.test.images[15],(28,28))
-#pt.imshow(d,cmap='Greys_r')
+
 
 
     
