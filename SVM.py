@@ -1,7 +1,10 @@
+"""
+Created on Tue Sep  11 08:46:20 2001
+
+@author: Nikola
+"""
 import numpy as np
-import cvxopt as cvxopt
-#from cvxopt import solvers
-import pylab as pl
+import cvxopt
 
 
 class svm:
@@ -51,7 +54,7 @@ class svm:
                                                        # odnosno ovi brojevi predstavljaju redove matrice X, odnosno ti redovi su support vektori
                                                       
         self.nsupport = len(self.sv) # ovim dobijamo ukupan broj support vectora
-        print (self.nsupport, "support vektors found")
+        print (self.nsupport, "support vectors found")
         
         self.X = X[self.sv, :]# na ovaj nacin uzimamo samo one support vektore koji nam trebaju
         self.lambdas = lambdas[self.sv] #uzimamo samo lambde koje odgovaraju support vektorima

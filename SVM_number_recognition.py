@@ -4,24 +4,12 @@ Created on Sat Apr  7 14:57:40 2018
 
 @author: Nikola
 """
-
-
-import pandas as pd
 import numpy as np
-import matplotlib.pyplot as pt
-from tensorflow.examples.tutorials.mnist import input_data
 from SVM import svm
 
 class svm_num_recognition:
     def __init__(self, kernel = 'poly', C = 1, degree = 1, sigma = 1, threshold = 1e-5):
-        self.kernel = kernel
-        if self.kernel == 'linear':# od 18 do 24 linije mozda ne treba
-            self.kernel = 'poly'
-            self.degree = 1.
-        self.C = C
-        self.sigma = sigma
-        self.degree = degree
-        self.threshold = threshold
+
         self. sv0 = svm(kernel,C=C,degree=degree, sigma=sigma, threshold = threshold)
         self. sv1 = svm(kernel,C=C,degree=degree, sigma=sigma, threshold = threshold)
         self. sv2 = svm(kernel,C=C,degree=degree, sigma=sigma, threshold = threshold)
@@ -32,8 +20,6 @@ class svm_num_recognition:
         self. sv7 = svm(kernel,C=C,degree=degree, sigma=sigma, threshold = threshold)
         self. sv8 = svm(kernel,C=C,degree=degree, sigma=sigma, threshold = threshold)
         self. sv9 = svm(kernel,C=C,degree=degree, sigma=sigma, threshold = threshold)
-    
-    
         
     def svm_train_1_num(self, training_set, training_labels, number , sv):
         if(np.shape(training_labels)[0]!=np.shape(training_set)[0]):
@@ -69,25 +55,24 @@ class svm_num_recognition:
         
         for i in range (0, np.shape(classification)[0]):
             if(labels[i,number] == 1):
-               
-                
                 if(classification[i] == 1):
                     true_positives = true_positives + 1
                 elif(classification[i] == -1):
                     false_negatives = false_negatives + 1
-                #print("label of the non-classified number is: ",10000+i)
-            elif(classification[i] == 1):
-                false_positives = false_positives + 1
-            #print("label of the non-classified number is: ",10000+i)
-            elif (classification[i] == -1):
-                true_negatives = true_negatives + 1
+                    #print("label of the non-classified number is: ",10000+i)
+            else:        
+                if(classification[i] == 1):
+                    false_positives = false_positives + 1
+                    #print("label of the non-classified number is: ",10000+i)
+                elif(classification[i] == -1):
+                    true_negatives = true_negatives + 1
         
         confusion_matrix [0, 0]= true_positives
         confusion_matrix [0, 1]= false_positives
         confusion_matrix [1, 0]= false_negatives
         confusion_matrix [1, 1]= true_negatives
         print("confusion matrix for num:",number,"is\n", confusion_matrix)
-        print("accuracy = ", (true_positives+true_negatives)/np.shape(classification)[0])
+        print("accuracy = {0:.2f}%".format(((true_positives+true_negatives)/np.shape(classification)[0])*100))
         
     def svm_validation(self, validation_images,validation_labels):
         if(np.shape(validation_labels)[0]!=np.shape(validation_images)[0]):
@@ -129,7 +114,7 @@ class svm_num_recognition:
         classification8=self.sv8.classifier(Ytest,soft = False)
         classification9=self.sv9.classifier(Ytest,soft = False)
         if(classification0 == 1):
-            print(0)
+            print("classified number is", 0)
         elif(classification1 == 1):
             print("classified number is", 1)
         elif(classification2 == 1):
