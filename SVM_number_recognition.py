@@ -27,7 +27,7 @@ class svm_num_recognition:
             return -1;
         t = -np.ones((np.shape(training_set)[0],1))
         for i in range (0, np.shape(training_set)[0]):
-            if training_labels[i,number]==1:
+            if training_labels[i]==number:
                 t[i] = 1;
         sv.train_svm(training_set, t)
         
@@ -47,6 +47,7 @@ class svm_num_recognition:
         self.svm_train_1_num(training_set, training_labels, 9, self.sv9)
         
     def confusion_matrix_func (self, classification, labels, number):
+        classification = np.sign(classification)
         confusion_matrix = np.ones((2,2))
         true_positives = 0
         true_negatives = 0
@@ -54,7 +55,7 @@ class svm_num_recognition:
         false_negatives = 0
         
         for i in range (0, np.shape(classification)[0]):
-            if(labels[i,number] == 1):
+            if(labels[i] == number):
                 if(classification[i] == 1):
                     true_positives = true_positives + 1
                 elif(classification[i] == -1):
@@ -74,73 +75,76 @@ class svm_num_recognition:
         print("confusion matrix for num:",number,"is\n", confusion_matrix)
         print("accuracy = {0:.2f}%".format(((true_positives+true_negatives)/np.shape(classification)[0])*100))
         
+    
+        
     def svm_validation(self, validation_images,validation_labels):
         if(np.shape(validation_labels)[0]!=np.shape(validation_images)[0]):
             print("size of label matrix and data_matrix are not the same!!")
             return -1;
         Ytest = validation_images
-        classification0=self.sv0.classifier(Ytest,soft = False)
-        classification1=self.sv1.classifier(Ytest,soft = False)
-        classification2=self.sv2.classifier(Ytest,soft = False)
-        classification3=self.sv3.classifier(Ytest,soft = False)
-        classification4=self.sv4.classifier(Ytest,soft = False)
-        classification5=self.sv5.classifier(Ytest,soft = False)
-        classification6=self.sv6.classifier(Ytest,soft = False)
-        classification7=self.sv7.classifier(Ytest,soft = False)
-        classification8=self.sv8.classifier(Ytest,soft = False)
-        classification9=self.sv9.classifier(Ytest,soft = False)
+        self.soft = True
+        self.classification0=self.sv0.classifier(Ytest,soft = self.soft)
+        self.classification1=self.sv1.classifier(Ytest,soft = self.soft)
+        self.classification2=self.sv2.classifier(Ytest,soft = self.soft)
+        self.classification3=self.sv3.classifier(Ytest,soft = self.soft)
+        self.classification4=self.sv4.classifier(Ytest,soft = self.soft)
+        self.classification5=self.sv5.classifier(Ytest,soft = self.soft)
+        self.classification6=self.sv6.classifier(Ytest,soft = self.soft)
+        self.classification7=self.sv7.classifier(Ytest,soft = self.soft)
+        self.classification8=self.sv8.classifier(Ytest,soft = self.soft)
+        self.classification9=self.sv9.classifier(Ytest,soft = self.soft)
         
-        self.confusion_matrix_func(classification = classification0, labels = validation_labels, number = 0)
-        self.confusion_matrix_func(classification = classification1, labels = validation_labels, number = 1)
-        self.confusion_matrix_func(classification = classification2, labels = validation_labels, number = 2)
-        self.confusion_matrix_func(classification = classification3, labels = validation_labels, number = 3)
-        self.confusion_matrix_func(classification = classification4, labels = validation_labels, number = 4)
-        self.confusion_matrix_func(classification = classification5, labels = validation_labels, number = 5)
-        self.confusion_matrix_func(classification = classification6, labels = validation_labels, number = 6)
-        self.confusion_matrix_func(classification = classification7, labels = validation_labels, number = 7)
-        self.confusion_matrix_func(classification = classification8, labels = validation_labels, number = 8)
-        self.confusion_matrix_func(classification = classification9, labels = validation_labels, number = 9)
-    
+        self.confusion_matrix_func(classification = self.classification0, labels = validation_labels, number = 0)
+        self.confusion_matrix_func(classification = self.classification1, labels = validation_labels, number = 1)
+        self.confusion_matrix_func(classification = self.classification2, labels = validation_labels, number = 2)
+        self.confusion_matrix_func(classification = self.classification3, labels = validation_labels, number = 3)
+        self.confusion_matrix_func(classification = self.classification4, labels = validation_labels, number = 4)
+        self.confusion_matrix_func(classification = self.classification5, labels = validation_labels, number = 5)
+        self.confusion_matrix_func(classification = self.classification6, labels = validation_labels, number = 6)
+        self.confusion_matrix_func(classification = self.classification7, labels = validation_labels, number = 7)
+        self.confusion_matrix_func(classification = self.classification8, labels = validation_labels, number = 8)
+        self.confusion_matrix_func(classification = self.classification9, labels = validation_labels, number = 9)
+        
+        self.svm_big_confusion_matrix(validation_labels)
+        
     def svm_one_num_classification(self, image):
         Ytest=np.reshape(image, (1,784))
-        classification0=self.sv0.classifier(Ytest,soft = False)
-        classification1=self.sv1.classifier(Ytest,soft = False)
-        classification2=self.sv2.classifier(Ytest,soft = False)
-        classification3=self.sv3.classifier(Ytest,soft = False)
-        classification4=self.sv4.classifier(Ytest,soft = False)
-        classification5=self.sv5.classifier(Ytest,soft = False)
-        classification6=self.sv6.classifier(Ytest,soft = False)
-        classification7=self.sv7.classifier(Ytest,soft = False)
-        classification8=self.sv8.classifier(Ytest,soft = False)
-        classification9=self.sv9.classifier(Ytest,soft = False)
-        if(classification0 == 1):
-            print("classified number is", 0)
-        elif(classification1 == 1):
-            print("classified number is", 1)
-        elif(classification2 == 1):
-            print ("classified number is", 2)
-        elif(classification3 == 1):
-            print ("classified number is", 3)
-        elif(classification4 == 1):
-            print ("classified number is", 4)
-        elif(classification5 == 1):
-            print ("classified number is", 5)
-        elif(classification6 == 1):
-            print ("classified number is", 6)
-        elif(classification7 == 1):
-            print ("classified number is", 7)
-        elif(classification8 == 1):
-            print ("classified number is", 8)
-        elif(classification9 == 1):
-            print ("classified number is", 9)
-        else:
-            print ("number not recognized")
+        classification0=self.sv0.classifier(Ytest,soft = self.soft)
+        classification1=self.sv1.classifier(Ytest,soft = self.soft)
+        classification2=self.sv2.classifier(Ytest,soft = self.soft)
+        classification3=self.sv3.classifier(Ytest,soft = self.soft)
+        classification4=self.sv4.classifier(Ytest,soft = self.soft)
+        classification5=self.sv5.classifier(Ytest,soft = self.soft)
+        classification6=self.sv6.classifier(Ytest,soft = self.soft)
+        classification7=self.sv7.classifier(Ytest,soft = self.soft)
+        classification8=self.sv8.classifier(Ytest,soft = self.soft)
+        classification9=self.sv9.classifier(Ytest,soft = self.soft)
+        conc_classification = np.concatenate((classification0,classification1,
+                                              classification2,classification3,
+                                              classification4,classification5,
+                                              classification6,classification7,
+                                              classification8,classification9), axis=1)
+        classified = np.argmax(conc_classification, axis = 1)
+        
+        print("predicted number is: ", classified)
         
     
-
-
+    def svm_big_confusion_matrix(self, validation_labels):
+        conc_classification = np.concatenate((self.classification0,self.classification1,
+                                              self.classification2,self.classification3,
+                                              self.classification4,self.classification5,
+                                              self.classification6,self.classification7,
+                                              self.classification8,self.classification9), axis=1) 
+        self.classified = np.argmax(conc_classification, axis = 1)
         
-
+        self.big_confusion=np.zeros([10,10])
+        
+        for i in range (0, np.shape(validation_labels)[0]):
+            self.big_confusion[validation_labels[i],self.classified[i]] += 1
+    
+        
+        print("big confusion matrix is:\n", self.big_confusion)
+        print("percentage: ",np.trace(self.big_confusion)/np.shape(validation_labels)[0])
 
 
     
