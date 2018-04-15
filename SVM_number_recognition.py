@@ -105,7 +105,7 @@ class svm_num_recognition:
         self.confusion_matrix_func(classification = self.classification8, labels = validation_labels, number = 8)
         self.confusion_matrix_func(classification = self.classification9, labels = validation_labels, number = 9)
         
-        self.svm_big_confusion_matrix(validation_labels)
+        return self.svm_big_confusion_matrix(validation_labels)
         
     def svm_one_num_classification(self, image):
         Ytest=np.reshape(image, (1,784))
@@ -145,7 +145,7 @@ class svm_num_recognition:
         
         print("big confusion matrix is:\n", self.big_confusion)
         print("percentage: ",np.trace(self.big_confusion)/np.shape(validation_labels)[0])
-
+        return np.trace(self.big_confusion)/np.shape(validation_labels)[0]
 
     
         

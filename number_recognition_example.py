@@ -9,22 +9,37 @@ import matplotlib.pyplot as pt
 from tensorflow.examples.tutorials.mnist import input_data
 from SVM_number_recognition import svm_num_recognition
 
-sv = svm_num_recognition(kernel = 'poly', C = 1, degree = 3, sigma = 1, threshold = 1e-7)
+
+
 
 mnist = input_data.read_data_sets("MNIST_data/", one_hot=False)
-# mnist contains all the datasets (train,test,validatio images and labels)
-# when running this line the first time it will take some time beacause it takes some time for data sets to be downloaded
 
-sv.svm_train(mnist.train.images[0:3000], mnist.train.labels[0:3000])
-# changing the number of images for training data can give better results, but training the network takes longer
+sv = svm_num_recognition(kernel = 'poly', C = 1.6, degree = 3, sigma = 1, threshold = 1e-7)
+sv.svm_train(mnist.train.images[0:200], mnist.train.labels[0:200])
+a = sv.svm_validation(mnist.test.images[0:1000], mnist.test.labels[0:1000])
 
-sv.svm_validation(mnist.test.images[0:5000], mnist.test.labels[0:5000])
-#this gives a confusion matrix that tells us how god the classifier classifed the data
-
-num=1101
+num=9980
 sv.svm_one_num_classification(mnist.test.images[num])
-# this here prints out the number that has been given as a parameter
+
 #1101,1107,1116,1119,200,175
 d=np.reshape(mnist.test.images[num],(28,28)) 
-# this is a confirmation of a previous classification
 pt.imshow(d,cmap='Greys_r')
+
+# ovo sam pokusavao da testiram kako se menja procenat uspesnosti kada menjam C
+percentage = np.zeros([100])
+j=0;
+for i in range(0,100):
+    j+=0.1
+    sv = svm_num_recognition(kernel = 'poly', C = j, degree = 3, sigma = 1, threshold = 1e-7)
+    sv.svm_train(mnist.train.images[0:200], mnist.train.labels[0:200])
+    percentage[i] = sv.svm_validation(mnist.test.images[0:1000], mnist.test.labels[0:1000])
+
+np.argmin(percentage)        
+percentage[41]
+
+##############################################
+X=np.array([[1,2,3],[4,5,6],[7,8,9]])
+z=np.array([0,0,0])
+for i in range(0,3):
+  z+=X[i]
+g=z.T+1
