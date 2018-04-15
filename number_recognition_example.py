@@ -15,8 +15,8 @@ from SVM_number_recognition import svm_num_recognition
 mnist = input_data.read_data_sets("MNIST_data/", one_hot=False)
 
 sv = svm_num_recognition(kernel = 'poly', C = 1.6, degree = 3, sigma = 1, threshold = 1e-7)
-sv.svm_train(mnist.train.images[0:200], mnist.train.labels[0:200])
-a = sv.svm_validation(mnist.test.images[0:1000], mnist.test.labels[0:1000])
+sv.svm_train(mnist.train.images[0:10000], mnist.train.labels[0:10000])
+a = sv.svm_validation(mnist.test.images[0:10000], mnist.test.labels[0:10000])
 
 num=9980
 sv.svm_one_num_classification(mnist.test.images[num])
