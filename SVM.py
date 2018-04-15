@@ -45,7 +45,7 @@ class svm:
             h = np.concatenate((self.C*np.ones((self.N,1)),np.zeros((self.N,1))))# iz razloga sto je labmda vece od nule i manje od C potrebno je da 
                                                                                  # izvrsimo kontatanaciju 2 colon matrice nula i C-ova
         A = targets.reshape(1, self.N)                                           
-        b = 0.0                                                                          
+        b = 0.0                                                                    
         sol = cvxopt.solvers.qp(cvxopt.matrix(P),cvxopt.matrix(q),cvxopt.matrix(G),cvxopt.matrix(h), cvxopt.matrix(A), cvxopt.matrix(b))
         
         lambdas = np.array(sol['x'])# izvlaci lambde iz sol-a, 'x' predstavlja neki parametar kojim to radimo
@@ -59,13 +59,33 @@ class svm:
         self.X = X[self.sv, :]# na ovaj nacin uzimamo samo one support vektore koji nam trebaju
         self.lambdas = lambdas[self.sv] #uzimamo samo lambde koje odgovaraju support vektorima
         self.targets = targets[self.sv] #uzimamo samo targete koji odgovaraju support vektorima
-        
+       
         self.b = np.sum(self.targets)
         for n in range(self.nsupport):# loop u zavisnosti od toga koliko support vektora ima
             self.b -= np.sum(self.lambdas * self.targets * np.reshape(self.K[self.sv[n], self.sv], (self.nsupport, 1))) # proracun za bias
         self.b /= len(self.lambdas)
         
         
+        self.W = self.lambdas * self.targets * self.X
+        self.weights=np.zeros([1,np.shape(self.X)[1]])
+        for i in range(0,self.nsupport):
+            self.weights+=self.W[i]
+        if self.kernel == 'poly':
+            def classifier(Y, soft = False): # ovim klasifikujemo podatke nakon sto je mreza istrenirana
+                K = (1. + 1./self.sigma*np.dot(Y,self.weights.T))**self.degree
+                
+                self.y = np.zeros((np.shape(Y)[0],1)) # pravi matricu nula cija je dimenzija broj_redova_matrice(Y)x1
+                self.y = K + self.b
+                    
+                if soft:
+                    return self.y
+                else:
+                    return np.sign(self.y) # vraca klasifikovan y odnosno matricu minus jedinica i jedinica
+        else:
+            print ("Error -- kernel not recognised")
+            return
+        self.classifier = classifier
+        """
         if self.kernel == 'poly':
             def classifier(Y, soft = False): # ovim klasifikujemo podatke nakon sto je mreza istrenirana
                 K = (1. + 1./self.sigma*np.dot(Y,self.X.T))**self.degree
@@ -102,4 +122,4 @@ class svm:
             print ("Error -- kernel not recognised")
             return
         self.classifier = classifier
-                
+        """        
