@@ -46,7 +46,7 @@ mnist = input_data.read_data_sets("MNIST_data/", one_hot=False)
 
 #############################################
 # TESTING 
-train_num = 1000
+train_num = 2000
 test_num = 1000
 train_data = mnist.train.images[0:train_num]
 train_labels = mnist.train.labels[0:train_num] 
@@ -85,17 +85,11 @@ percentage[np.argmax(percentage)]
 #############################################
 # TESTING DESKEW FUNCTIONS
     
-z=deskew(mnist.test.images[1101])
+z=deskew(mnist.test.images[4699])
 sv.svm_one_num_classification(z)
 zz=np.reshape(z,(28,28))
 pt.imshow(zz,cmap='Greys_r')
 
-#############################################
-# WRITING TO FILE
-z= np.array([[2,1,5,4,6],[1,2,3,5,4]])
-test = open("djole/test.txt",'w')
-np.savetxt(test,z,fmt='%.10f')
-test.close()
 
 
 

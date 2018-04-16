@@ -111,8 +111,6 @@ class svm_num_recognition:
         
         # treba za upis u fajl
         self.num_test=np.shape(Ytest)[0]
-        self.save_to_files()
-        
         
         return self.svm_big_confusion_matrix(validation_labels)
         
@@ -151,14 +149,18 @@ class svm_num_recognition:
     
         
         print("big confusion matrix is:\n", self.big_confusion)
-        print("percentage: ",np.trace(self.big_confusion)/np.shape(validation_labels)[0])
-        return (np.trace(self.big_confusion)/np.shape(validation_labels)[0])
+        self.percent =100*np.trace(self.big_confusion)/np.shape(validation_labels)[0]
+        self.save_to_files()
+        print("percentage: {0:.2f}%".format(self.percent))
+        return (self.percent)
 
     def save_to_files(self):
         #INFO
         info = open("saved_data/info.txt",'w')
         info.write("Kernel:\n")
         info.write(self.sv0.kernel)
+        info.write("\nAccuracy:\n")
+        info.write(str(self.percent))
         info.write("\nSlack constant:\n")
         info.write(str(self.sv0.C))
         info.write("\nDegree:\n")
