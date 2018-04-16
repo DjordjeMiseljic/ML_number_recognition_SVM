@@ -46,9 +46,8 @@ mnist = input_data.read_data_sets("MNIST_data/", one_hot=False)
 
 #############################################
 # TESTING 
-train_num = 100
-test_num = 100
-
+train_num = 1000
+test_num = 1000
 train_data = mnist.train.images[0:train_num]
 train_labels = mnist.train.labels[0:train_num] 
 test_data = mnist.test.images[0:test_num]
@@ -87,6 +86,7 @@ percentage[np.argmax(percentage)]
 # TESTING DESKEW FUNCTIONS
     
 z=deskew(mnist.test.images[1101])
+sv.svm_one_num_classification(z)
 zz=np.reshape(z,(28,28))
 pt.imshow(zz,cmap='Greys_r')
 

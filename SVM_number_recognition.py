@@ -47,7 +47,7 @@ class svm_num_recognition:
         self.svm_train_1_num(training_set, training_labels, 9, self.sv9)
         
         #treba za upis u fajl
-        self.num_treain=np.shape(training_set)[0]
+        self.num_train=np.shape(training_set)[0]
         
         
     def confusion_matrix_func (self, classification, labels, number):
@@ -134,9 +134,7 @@ class svm_num_recognition:
                                               classification6,classification7,
                                               classification8,classification9), axis=1)
         classified = np.argmax(conc_classification, axis = 1)
-        
         print("predicted number is: ", classified)
-        
     
     def svm_big_confusion_matrix(self, validation_labels):
         conc_classification = np.concatenate((self.classification0,self.classification1,
@@ -159,22 +157,20 @@ class svm_num_recognition:
     def save_to_files(self):
         #INFO
         info = open("saved_data/info.txt",'w')
-        info.write("Kernel:")
+        info.write("Kernel:\n")
         info.write(self.sv0.kernel)
-        info.write("Slack constant:")
-        """
-        info.write(self.sv0.C)
-        info.write("Degree:")
-        info.write(self.sv0.degree)
-        info.write("Sigma:")
-        info.write(self.sv0.sigma)
-        info.write("Threshold:")
-        info.write(self.sv0.threshold)
-        info.write("Number of training examples:")
-        info.write(self.num_train)
-        info.write("Number of testing examples:")
-        info.write(self.num_test)
-        """
+        info.write("\nSlack constant:\n")
+        info.write(str(self.sv0.C))
+        info.write("\nDegree:\n")
+        info.write(str(self.sv0.degree))
+        info.write("\nSigma:\n")
+        info.write(str(self.sv0.sigma))
+        info.write("\nThreshold:\n")
+        info.write(str(self.sv0.threshold))
+        info.write("\nNumber of training examples:\n")
+        info.write(str(self.num_train))
+        info.write("\nNumber of testing examples:\n")
+        info.write(str(self.num_test))
         info.close()
         
         #SUPPORT VECTORS
