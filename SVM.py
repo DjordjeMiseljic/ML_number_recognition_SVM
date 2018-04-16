@@ -60,6 +60,8 @@ class svm:
         self.lambdas = lambdas[self.sv] #uzimamo samo lambde koje odgovaraju support vektorima
         self.targets = targets[self.sv] #uzimamo samo targete koji odgovaraju support vektorima
         
+        
+        
         self.b = np.sum(self.targets)
         for n in range(self.nsupport):# loop u zavisnosti od toga koliko support vektora ima
             self.b -= np.sum(self.lambdas * self.targets * np.reshape(self.K[self.sv[n], self.sv], (self.nsupport, 1))) # proracun za bias

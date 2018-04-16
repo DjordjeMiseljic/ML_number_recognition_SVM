@@ -46,6 +46,10 @@ class svm_num_recognition:
         self.svm_train_1_num(training_set, training_labels, 8, self.sv8)
         self.svm_train_1_num(training_set, training_labels, 9, self.sv9)
         
+        #treba za upis u fajl
+        self.num_treain=np.shape(training_set)[0]
+        
+        
     def confusion_matrix_func (self, classification, labels, number):
         classification = np.sign(classification)
         confusion_matrix = np.ones((2,2))
@@ -105,6 +109,11 @@ class svm_num_recognition:
         self.confusion_matrix_func(classification = self.classification8, labels = validation_labels, number = 8)
         self.confusion_matrix_func(classification = self.classification9, labels = validation_labels, number = 9)
         
+        # treba za upis u fajl
+        self.num_test=np.shape(Ytest)[0]
+        self.save_to_files()
+        
+        
         return self.svm_big_confusion_matrix(validation_labels)
         
     def svm_one_num_classification(self, image):
@@ -147,7 +156,153 @@ class svm_num_recognition:
         print("percentage: ",np.trace(self.big_confusion)/np.shape(validation_labels)[0])
         return (np.trace(self.big_confusion)/np.shape(validation_labels)[0])
 
-    
+    def save_to_files(self):
+        #INFO
+        info = open("saved_data/info.txt",'w')
+        info.write("Kernel:")
+        info.write(self.sv0.kernel)
+        info.write("Slack constant:")
+        """
+        info.write(self.sv0.C)
+        info.write("Degree:")
+        info.write(self.sv0.degree)
+        info.write("Sigma:")
+        info.write(self.sv0.sigma)
+        info.write("Threshold:")
+        info.write(self.sv0.threshold)
+        info.write("Number of training examples:")
+        info.write(self.num_train)
+        info.write("Number of testing examples:")
+        info.write(self.num_test)
+        """
+        info.close()
+        
+        #SUPPORT VECTORS
+        support_vectors0 = open("saved_data/support_vectors/sv0.txt",'w')
+        np.savetxt(support_vectors0,self.sv0.X,fmt='%.2f')
+        support_vectors0.close()
+        
+        support_vectors1 = open("saved_data/support_vectors/sv1.txt",'w')
+        np.savetxt(support_vectors1,self.sv1.X,fmt='%.2f')
+        support_vectors1.close()
+        
+        support_vectors2 = open("saved_data/support_vectors/sv2.txt",'w')
+        np.savetxt(support_vectors2,self.sv2.X,fmt='%.2f')
+        support_vectors2.close()
+        
+        support_vectors3 = open("saved_data/support_vectors/sv3.txt",'w')
+        np.savetxt(support_vectors3,self.sv3.X,fmt='%.2f')
+        support_vectors3.close()
+        
+        support_vectors4 = open("saved_data/support_vectors/sv4.txt",'w')
+        np.savetxt(support_vectors4,self.sv4.X,fmt='%.2f')
+        support_vectors4.close()
+        
+        support_vectors5 = open("saved_data/support_vectors/sv5.txt",'w')
+        np.savetxt(support_vectors5,self.sv5.X,fmt='%.2f')
+        support_vectors5.close()
+        
+        support_vectors6 = open("saved_data/support_vectors/sv6.txt",'w')
+        np.savetxt(support_vectors6,self.sv6.X,fmt='%.2f')
+        support_vectors6.close()
+        
+        support_vectors7 = open("saved_data/support_vectors/sv7.txt",'w')
+        np.savetxt(support_vectors7,self.sv7.X,fmt='%.2f')
+        support_vectors7.close()
+        
+        support_vectors8 = open("saved_data/support_vectors/sv8.txt",'w')
+        np.savetxt(support_vectors8,self.sv8.X,fmt='%.2f')
+        support_vectors8.close()
+        
+        support_vectors9 = open("saved_data/support_vectors/sv9.txt",'w')
+        np.savetxt(support_vectors9,self.sv9.X,fmt='%.2f')
+        support_vectors9.close()
+        
+        
+        
+        #LAMBDAS
+        lambdas0 = open("saved_data/lambdas/lambdas0.txt",'w')
+        np.savetxt(lambdas0,self.sv0.lambdas,fmt='%.2e')
+        lambdas0.close()
+        
+        lambdas1 = open("saved_data/lambdas/lambdas1.txt",'w')
+        np.savetxt(lambdas1,self.sv1.lambdas,fmt='%.2e')
+        lambdas1.close()
+        
+        lambdas2 = open("saved_data/lambdas/lambdas2.txt",'w')
+        np.savetxt(lambdas2,self.sv2.lambdas,fmt='%.2e')
+        lambdas2.close()
+        
+        lambdas3 = open("saved_data/lambdas/lambdas3.txt",'w')
+        np.savetxt(lambdas3,self.sv3.lambdas,fmt='%.2e')
+        lambdas3.close()
+        
+        lambdas4 = open("saved_data/lambdas/lambdas4.txt",'w')
+        np.savetxt(lambdas4,self.sv4.lambdas,fmt='%.2e')
+        lambdas4.close()
+        
+        lambdas5 = open("saved_data/lambdas/lambdas5.txt",'w')
+        np.savetxt(lambdas5,self.sv5.lambdas,fmt='%.2e')
+        lambdas5.close()
+        
+        lambdas6 = open("saved_data/lambdas/lambdas6.txt",'w')
+        np.savetxt(lambdas6,self.sv6.lambdas,fmt='%.2e')
+        lambdas6.close()
+        
+        lambdas7 = open("saved_data/lambdas/lambdas7.txt",'w')
+        np.savetxt(lambdas7,self.sv7.lambdas,fmt='%.2e')
+        lambdas7.close()
+        
+        lambdas8 = open("saved_data/lambdas/lambdas8.txt",'w')
+        np.savetxt(lambdas8,self.sv8.lambdas,fmt='%.2e')
+        lambdas8.close()
+        
+        lambdas9 = open("saved_data/lambdas/lambdas9.txt",'w')
+        np.savetxt(lambdas9,self.sv9.lambdas,fmt='%.2e')
+        lambdas9.close()
+        
+        
+        
+        #TARGETS
+        targets0 = open("saved_data/targets/targets0.txt",'w')
+        np.savetxt(targets0,self.sv0.targets,fmt='%.2f')
+        targets0.close()
+        
+        targets1 = open("saved_data/targets/targets1.txt",'w')
+        np.savetxt(targets1,self.sv1.targets,fmt='%.2f')
+        targets1.close()
+        
+        targets2 = open("saved_data/targets/targets2.txt",'w')
+        np.savetxt(targets2,self.sv2.targets,fmt='%.2f')
+        targets2.close()
+        
+        targets3 = open("saved_data/targets/targets3.txt",'w')
+        np.savetxt(targets3,self.sv3.targets,fmt='%.2f')
+        targets3.close()
+        
+        targets4 = open("saved_data/targets/targets4.txt",'w')
+        np.savetxt(targets4,self.sv4.targets,fmt='%.2f')
+        targets4.close()
+        
+        targets5 = open("saved_data/targets/targets5.txt",'w')
+        np.savetxt(targets5,self.sv5.targets,fmt='%.2f')
+        targets5.close()
+        
+        targets6 = open("saved_data/targets/targets6.txt",'w')
+        np.savetxt(targets6,self.sv6.targets,fmt='%.2f')
+        targets6.close()
+        
+        targets7 = open("saved_data/targets/targets7.txt",'w')
+        np.savetxt(targets7,self.sv7.targets,fmt='%.2f')
+        targets7.close()
+        
+        targets8 = open("saved_data/targets/targets8.txt",'w')
+        np.savetxt(targets8,self.sv8.targets,fmt='%.2f')
+        targets8.close()
+        
+        targets9 = open("saved_data/targets/targets9.txt",'w')
+        np.savetxt(targets9,self.sv9.targets,fmt='%.2f')
+        targets9.close()
         
         
         
