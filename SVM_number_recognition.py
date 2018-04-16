@@ -215,7 +215,7 @@ class svm_num_recognition:
         support_vectors8.close()
         
         support_vectors9 = open("saved_data/support_vectors/sv9.txt",'w')
-        np.savetxt(support_vectors9,self.sv9.X,fmt='%.11f')
+        np.savetxt(support_vectors9,self.sv9.X,fmt='%.11f ')
         support_vectors9.close()
         
         
