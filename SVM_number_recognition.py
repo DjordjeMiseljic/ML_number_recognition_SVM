@@ -145,7 +145,7 @@ class svm_num_recognition:
         
         print("big confusion matrix is:\n", self.big_confusion)
         print("percentage: ",np.trace(self.big_confusion)/np.shape(validation_labels)[0])
-        return np.trace(self.big_confusion)/np.shape(validation_labels)[0]
+        return (np.trace(self.big_confusion)/np.shape(validation_labels)[0])
 
     
         

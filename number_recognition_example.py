@@ -25,17 +25,24 @@ sv.svm_one_num_classification(mnist.test.images[num])
 d=np.reshape(mnist.test.images[num],(28,28)) 
 pt.imshow(d,cmap='Greys_r')
 
-# ovo sam pokusavao da testiram kako se menja procenat uspesnosti kada menjam C
-percentage = np.zeros([100])
-j=0;
-for i in range(0,100):
-    j+=0.1
+# Testiranje uspjesnosti
+percentage = np.zeros([39])
+j=1;
+for i in range(0,39):
     sv = svm_num_recognition(kernel = 'poly', C = j, degree = 3, sigma = 1, threshold = 1e-7)
-    sv.svm_train(mnist.train.images[0:200], mnist.train.labels[0:200])
-    percentage[i] = sv.svm_validation(mnist.test.images[0:1000], mnist.test.labels[0:1000])
-
-np.argmin(percentage)        
-percentage[41]
+    sv.svm_train(mnist.train.images[0:1000], mnist.train.labels[0:1000])
+    percentage[i] = sv.svm_validation(mnist.test.images[0:3000], mnist.test.labels[0:3000])
+    j+=0.05
+print ("maximum value:", np.max(percentage),"for C=", (np.argmax(percentage)*0.05+1))
+print ("minimum value:", np.min(percentage),"for C=", (np.argmin(percentage)*0.05+1))        
+#percentage[41]
+x= np.arange(1,2.95,0.05)
+pt.ion()
+pt.figure()
+pt.plot(x,percentage)
+pt.xlabel("C values")
+pt.ylabel("percentage [%]")
+pt.show
 
 ##############################################
 X=np.array([[1,2,3],[4,5,6],[7,8,9]])
