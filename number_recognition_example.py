@@ -68,8 +68,9 @@ X[0,np.argmin(X)]
 #############################################
 # CLASSIFYING SINGLE IMAGE 
 mistakes = np.where(test_labels!=sv.classified)## indexex where classified numbers differ from the labeled ones
-
-num=882
+sv.classified[417]
+test_labels[417]
+num=417
 sv.svm_one_num_classification(mnist.test.images[num]) #1101,1107,1116,1119,200,175
 d=np.reshape(mnist.test.images[num],(28,28)) 
 pt.imshow(d,cmap='Greys_r')
