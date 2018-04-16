@@ -46,6 +46,7 @@ mnist = input_data.read_data_sets("MNIST_data/", one_hot=False)
 
 #############################################
 # TESTING 
+
 train_num = 1000
 test_num = 1000
 train_data = mnist.train.images[0:train_num]
@@ -57,22 +58,28 @@ sv = svm_num_recognition(kernel = 'poly', C = 1.6, degree = 3, sigma = 1, thresh
 sv.svm_train(train_data, train_labels)
 a = sv.svm_validation(test_data, test_labels)
 
-
 sv = svm_num_recognition(kernel = 'poly', C = 1.6, degree = 3, sigma = 1, threshold = 1e-7)
 sv.svm_train(deskew_dataset(train_data),train_labels)
 a = sv.svm_validation(deskew_dataset(test_data), test_labels)
 
-s = np.where(sv.sv3.X[0,:]>0)
-X = sv.sv3.X[0,s]
-X[0,np.argmin(X)]
 #############################################
 # CLASSIFYING SINGLE IMAGE 
-mistakes = np.where(test_labels!=sv.classified)## indexex where classified numbers differ from the labeled ones
-sv.classified[417]
-test_labels[417]
+
+mistakes = np.where(test_labels!=sv.classified)
+## indexex where classified numbers differ from the labeled ones
+
 num=417
-sv.svm_one_num_classification(mnist.test.images[num]) #1101,1107,1116,1119,200,175
-d=np.reshape(mnist.test.images[num],(28,28)) 
+
+print("Normal classification")
+sv.svm_one_num_classification(test_data[num])
+d=np.reshape(test_data[num],(28,28)) 
+pt.figure()
+pt.imshow(d,cmap='Greys_r')
+
+print("Classification with deskew")
+sv.svm_one_num_classification(deskew(test_data[num]))
+d=np.reshape(deskew(test_data[num]),(28,28)) 
+pt.figure()
 pt.imshow(d,cmap='Greys_r')
 
 #############################################
