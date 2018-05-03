@@ -5,6 +5,7 @@ Created on Tue Sep  11 08:46:20 2001
 """
 import numpy as np
 import cvxopt
+from numba import jit
 
 
 class svm:
@@ -30,7 +31,7 @@ class svm:
             b = np.ones((self.N, 1))
             self.K -= 0.5*(np.dot(self.xsquared, b) + np.dot(b, self.xsquared)) # ovde je bila greska u kodu, pogledaj originalni !!!
             self.K = np.exp(self.K/(2.*self.sigma**2))
-            
+        
     def train_svm(self, X, targets):
         self.N = np.shape(X)[0] # vraca broj redova u matrici X
         self.build_kernel(X)
