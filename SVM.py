@@ -5,7 +5,7 @@ Created on Tue Sep  11 08:46:20 2001
 """
 import numpy as np
 import cvxopt
-from numba import jit
+#from numba import jit
 
 
 class svm:

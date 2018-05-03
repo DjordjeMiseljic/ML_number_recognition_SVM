@@ -11,15 +11,17 @@ import matplotlib.pyplot as pt
 from tensorflow.examples.tutorials.mnist import input_data
 from SVM_number_recognition import svm_num_recognition
 import cv2
-from numba import jit, autojit
+#from numba import jit, autojit
 
 ##############################################
 #function for speeding up the training
+"""
 @jit
 def fast_svm_train(train_data, train_labels,test_data,test_labels):
     sv = svm_num_recognition(kernel = 'poly', C = 1.6, degree = 3, sigma = 1, threshold = 1e-7)
     sv.svm_train(train_data,train_labels)
     a = sv.svm_validation(deskew_dataset(test_data), test_labels)
+"""
 ##############################################
 # DESKEW FUNCTION
 
@@ -53,32 +55,34 @@ def deskew_dataset(dataset):
 mnist = input_data.read_data_sets("MNIST_data/", one_hot=False)
 
 #############################################
-# TESTING 
+# TRAINIG + TESTING 
 
-train_num = 2000
+train_num = 100
 test_num = 1000
 train_data = mnist.train.images[0:train_num]
 train_labels = mnist.train.labels[0:train_num] 
 test_data = mnist.test.images[0:test_num]
 test_labels = mnist.test.labels[0:test_num]
 
+#naked
 sv = svm_num_recognition(kernel = 'poly', C = 1.6, degree = 3, sigma = 1, threshold = 1e-7)
 sv.svm_train(train_data, train_labels)
 a = sv.svm_validation(test_data, test_labels)
 
+#with deskew
 sv = svm_num_recognition(kernel = 'poly', C = 1.6, degree = 3, sigma = 1, threshold = 1e-7)
 sv.svm_train(deskew_dataset(train_data),train_labels)
 a = sv.svm_validation(deskew_dataset(test_data), test_labels)
 
-
+############################################
 #speeded up training
-
+"""
 fast_svm_train(deskew_dataset(train_data), train_labels,deskew_dataset(test_data),test_labels)
-
+"""
 #############################################
 #writing validation images into a file
 y = open("saved_data/test_images/y.txt",'w')
-np.savetxt(y,test_data,fmt='%.11f')
+np.savetxt(y,test_data,fmt='%.10e')
 y.close()    
 
 
@@ -86,7 +90,7 @@ y.close()
 # CLASSIFYING SINGLE IMAGE 
 
 mistakes = np.where(test_labels!=sv.classified)
-## indexex where classified numbers differ from the labeled ones
+## indexes where classified numbers differ from the labeled ones
 
 num=685
 
