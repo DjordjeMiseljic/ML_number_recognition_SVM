@@ -55,7 +55,7 @@ mnist = input_data.read_data_sets("MNIST_data/", one_hot=False)
 #############################################
 # TESTING 
 
-train_num = 1000
+train_num = 2000
 test_num = 1000
 train_data = mnist.train.images[0:train_num]
 train_labels = mnist.train.labels[0:train_num] 
@@ -88,17 +88,17 @@ y.close()
 mistakes = np.where(test_labels!=sv.classified)
 ## indexex where classified numbers differ from the labeled ones
 
-num=417
+num=685
 
 print("Normal classification")
-sv.svm_one_num_classification(test_data[num])
-d=np.reshape(test_data[num],(28,28)) 
+sv.svm_one_num_classification(mnist.test.images[num])
+d=np.reshape(mnist.test.images[num],(28,28)) 
 pt.figure()
 pt.imshow(d,cmap='Greys_r')
 
 print("Classification with deskew")
-sv.svm_one_num_classification(deskew(test_data[num]))
-d=np.reshape(deskew(test_data[num]),(28,28)) 
+sv.svm_one_num_classification(deskew(mnist.test.images[num]))
+d=np.reshape(deskew(mnist.test.images[num]),(28,28)) 
 pt.figure()
 pt.imshow(d,cmap='Greys_r')
 
