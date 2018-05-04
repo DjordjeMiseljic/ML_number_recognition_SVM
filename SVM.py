@@ -72,7 +72,7 @@ class svm:
         if self.kernel == 'poly':
             def classifier(Y, soft = False): # ovim klasifikujemo podatke nakon sto je mreza istrenirana
                 K = (1. + 1./self.sigma*np.dot(Y,self.X.T))**self.degree
-                
+                self.Z = K
                 self.y = np.zeros((np.shape(Y)[0],1)) # pravi matricu nula cija je dimenzija broj_redova_matrice(Y)x1
                 for j in range (np.shape(Y)[0]): # ova dupla for petlja obavlja jednacinu 8.11 iz knjige na strani 175
                     for i in range (self.nsupport):

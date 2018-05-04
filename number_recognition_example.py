@@ -11,6 +11,7 @@ import matplotlib.pyplot as pt
 from tensorflow.examples.tutorials.mnist import input_data
 from SVM_number_recognition import svm_num_recognition
 import cv2
+from SVM import svm
 #from numba import jit, autojit
 
 ##############################################
@@ -58,7 +59,7 @@ mnist = input_data.read_data_sets("MNIST_data/", one_hot=False)
 # TRAINIG + TESTING 
 
 train_num = 50
-test_num = 100
+test_num = 1
 train_data = mnist.train.images[0:train_num]
 train_labels = mnist.train.labels[0:train_num] 
 test_data = mnist.test.images[0:test_num]
@@ -73,6 +74,15 @@ a = sv.svm_validation(test_data, test_labels)
 sv = svm_num_recognition(kernel = 'poly', C = 1.6, degree = 3, sigma = 1, threshold = 1e-7)
 sv.svm_train(deskew_dataset(train_data),train_labels)
 a = sv.svm_validation(deskew_dataset(test_data), test_labels)
+
+#train for one number
+sv0 = svm(kernel = 'poly', C = 1.6, degree = 3, sigma = 1, threshold = 1e-7)
+sv = svm_num_recognition(kernel = 'poly', C = 1.6, degree = 3, sigma = 1, threshold = 1e-7)
+sv.svm_train_1_num(train_data, train_labels, 0, sv0);
+sv0.classifier(test_data)
+np.shape(sv0.Z)
+
+
 
 ############################################
 #speeded up training
@@ -92,7 +102,11 @@ b = np.reshape(b,(1,1));
 bias = open("saved_data/bias/bias.txt",'w')
 np.savetxt(bias,b,fmt='%.10e')
 bias.close()
-
+#############################################
+#writing K into file
+K = open("saved_data/kernel/K.txt",'w')
+np.savetxt(K,sv0.Z,fmt='%.10e')
+K.close()
 #############################################
 # CLASSIFYING SINGLE IMAGE 
 
