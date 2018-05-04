@@ -57,8 +57,8 @@ mnist = input_data.read_data_sets("MNIST_data/", one_hot=False)
 #############################################
 # TRAINIG + TESTING 
 
-train_num = 100
-test_num = 1000
+train_num = 50
+test_num = 100
 train_data = mnist.train.images[0:train_num]
 train_labels = mnist.train.labels[0:train_num] 
 test_data = mnist.test.images[0:test_num]
@@ -83,8 +83,15 @@ fast_svm_train(deskew_dataset(train_data), train_labels,deskew_dataset(test_data
 #writing validation images into a file
 y = open("saved_data/test_images/y.txt",'w')
 np.savetxt(y,test_data,fmt='%.10e')
-y.close()    
+y.close()
 
+#############################################
+#writing bias into file
+b = sv.sv0.b
+b = np.reshape(b,(1,1));    
+bias = open("saved_data/bias/bias.txt",'w')
+np.savetxt(bias,b,fmt='%.10e')
+bias.close()
 
 #############################################
 # CLASSIFYING SINGLE IMAGE 
