@@ -92,7 +92,7 @@ fast_svm_train(deskew_dataset(train_data), train_labels,deskew_dataset(test_data
 #############################################
 #writing validation images into a file
 y = open("saved_data/test_images/y.txt",'w')
-np.savetxt(y,test_data,fmt='%.10e')
+np.savetxt(y,test_data,fmt='%.12e')
 y.close()
 
 #############################################
@@ -100,12 +100,12 @@ y.close()
 b = sv.sv0.b
 b = np.reshape(b,(1,1));    
 bias = open("saved_data/bias/bias.txt",'w')
-np.savetxt(bias,b,fmt='%.10e')
+np.savetxt(bias,b,fmt='%.12e')
 bias.close()
 #############################################
 #writing K into file
 K = open("saved_data/kernel/K.txt",'w')
-np.savetxt(K,sv0.Z,fmt='%.10e')
+np.savetxt(K,sv0.Z,fmt='%.12e')
 K.close()
 #############################################
 # CLASSIFYING SINGLE IMAGE 
