@@ -1,0 +1,16 @@
+Kernel:
+poly
+Accuracy:
+56.0
+Slack constant:
+1.6
+Degree:
+3
+Sigma:
+1
+Threshold:
+1e-07
+Number of training examples:
+50
+Number of testing examples:
+100
