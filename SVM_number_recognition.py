@@ -143,7 +143,7 @@ class svm_num_recognition:
                                               self.classification8,self.classification9), axis=1) 
         #Write primary results into file
         res = open("saved_data/results/res.txt",'w')
-        np.savetxt(res,conc_classification,fmt='%.10e')
+        np.savetxt(res,conc_classification,fmt='%.12e')
         res.close()
         #classify based on primary results
         self.classified = np.argmax(conc_classification, axis = 1)
@@ -184,86 +184,86 @@ class svm_num_recognition:
         
         #SUPPORT VECTORS
         support_vectors0 = open("saved_data/support_vectors/sv0.txt",'w')
-        np.savetxt(support_vectors0,self.sv0.X,fmt='%.10e')
+        np.savetxt(support_vectors0,self.sv0.X,fmt='%.12e')
         support_vectors0.close()
         
         support_vectors1 = open("saved_data/support_vectors/sv1.txt",'w')
-        np.savetxt(support_vectors1,self.sv1.X,fmt='%.10e')
+        np.savetxt(support_vectors1,self.sv1.X,fmt='%.12e')
         support_vectors1.close()
         
         support_vectors2 = open("saved_data/support_vectors/sv2.txt",'w')
-        np.savetxt(support_vectors2,self.sv2.X,fmt='%.10e')
+        np.savetxt(support_vectors2,self.sv2.X,fmt='%.12e')
         support_vectors2.close()
         
         support_vectors3 = open("saved_data/support_vectors/sv3.txt",'w')
-        np.savetxt(support_vectors3,self.sv3.X,fmt='%.10e')
+        np.savetxt(support_vectors3,self.sv3.X,fmt='%.12e')
         support_vectors3.close()
         
         support_vectors4 = open("saved_data/support_vectors/sv4.txt",'w')
-        np.savetxt(support_vectors4,self.sv4.X,fmt='%.10e')
+        np.savetxt(support_vectors4,self.sv4.X,fmt='%.12e')
         support_vectors4.close()
         
         support_vectors5 = open("saved_data/support_vectors/sv5.txt",'w')
-        np.savetxt(support_vectors5,self.sv5.X,fmt='%.10e')
+        np.savetxt(support_vectors5,self.sv5.X,fmt='%.12e')
         support_vectors5.close()
         
         support_vectors6 = open("saved_data/support_vectors/sv6.txt",'w')
-        np.savetxt(support_vectors6,self.sv6.X,fmt='%.10e')
+        np.savetxt(support_vectors6,self.sv6.X,fmt='%.12e')
         support_vectors6.close()
         
         support_vectors7 = open("saved_data/support_vectors/sv7.txt",'w')
-        np.savetxt(support_vectors7,self.sv7.X,fmt='%.10e')
+        np.savetxt(support_vectors7,self.sv7.X,fmt='%.12e')
         support_vectors7.close()
         
         support_vectors8 = open("saved_data/support_vectors/sv8.txt",'w')
-        np.savetxt(support_vectors8,self.sv8.X,fmt='%.10e')
+        np.savetxt(support_vectors8,self.sv8.X,fmt='%.12e')
         support_vectors8.close()
         
         support_vectors9 = open("saved_data/support_vectors/sv9.txt",'w')
-        np.savetxt(support_vectors9,self.sv9.X,fmt='%.10e')
+        np.savetxt(support_vectors9,self.sv9.X,fmt='%.12e')
         support_vectors9.close()
         
         
         
         #LAMBDAS
         lambdas0 = open("saved_data/lambdas/lambdas0.txt",'w')
-        np.savetxt(lambdas0,self.sv0.lambdas,fmt='%.10e')
+        np.savetxt(lambdas0,self.sv0.lambdas,fmt='%.12e')
         lambdas0.close()
         
         lambdas1 = open("saved_data/lambdas/lambdas1.txt",'w')
-        np.savetxt(lambdas1,self.sv1.lambdas,fmt='%.10e')
+        np.savetxt(lambdas1,self.sv1.lambdas,fmt='%.12e')
         lambdas1.close()
         
         lambdas2 = open("saved_data/lambdas/lambdas2.txt",'w')
-        np.savetxt(lambdas2,self.sv2.lambdas,fmt='%.10e')
+        np.savetxt(lambdas2,self.sv2.lambdas,fmt='%.12e')
         lambdas2.close()
         
         lambdas3 = open("saved_data/lambdas/lambdas3.txt",'w')
-        np.savetxt(lambdas3,self.sv3.lambdas,fmt='%.10e')
+        np.savetxt(lambdas3,self.sv3.lambdas,fmt='%.12e')
         lambdas3.close()
         
         lambdas4 = open("saved_data/lambdas/lambdas4.txt",'w')
-        np.savetxt(lambdas4,self.sv4.lambdas,fmt='%.10e')
+        np.savetxt(lambdas4,self.sv4.lambdas,fmt='%.12e')
         lambdas4.close()
         
         lambdas5 = open("saved_data/lambdas/lambdas5.txt",'w')
-        np.savetxt(lambdas5,self.sv5.lambdas,fmt='%.10e')
+        np.savetxt(lambdas5,self.sv5.lambdas,fmt='%.12e')
         lambdas5.close()
         
         lambdas6 = open("saved_data/lambdas/lambdas6.txt",'w')
-        np.savetxt(lambdas6,self.sv6.lambdas,fmt='%.10e')
+        np.savetxt(lambdas6,self.sv6.lambdas,fmt='%.12e')
         lambdas6.close()
         
         lambdas7 = open("saved_data/lambdas/lambdas7.txt",'w')
-        np.savetxt(lambdas7,self.sv7.lambdas,fmt='%.10e')
+        np.savetxt(lambdas7,self.sv7.lambdas,fmt='%.12e')
         lambdas7.close()
         
         lambdas8 = open("saved_data/lambdas/lambdas8.txt",'w')
-        np.savetxt(lambdas8,self.sv8.lambdas,fmt='%.10e')
+        np.savetxt(lambdas8,self.sv8.lambdas,fmt='%.12e')
         lambdas8.close()
         
         lambdas9 = open("saved_data/lambdas/lambdas9.txt",'w')
-        np.savetxt(lambdas9,self.sv9.lambdas,fmt='%.10e')
+        np.savetxt(lambdas9,self.sv9.lambdas,fmt='%.12e')
         lambdas9.close()
         
         
