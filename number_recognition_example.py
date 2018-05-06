@@ -58,8 +58,8 @@ mnist = input_data.read_data_sets("MNIST_data/", one_hot=False)
 #############################################
 # TRAINIG + TESTING 
 
-train_num = 50
-test_num = 100
+train_num = 2000
+test_num = 10000
 train_data = mnist.train.images[0:train_num]
 train_labels = mnist.train.labels[0:train_num] 
 test_data = mnist.test.images[0:test_num]
@@ -95,7 +95,7 @@ y = open("saved_data/test_images/y.txt",'w')
 np.savetxt(y,test_data,fmt='%.12e')
 y.close()
 
-<<<<<<< HEAD
+
 
 #############################################
 #writing K into file
@@ -103,20 +103,7 @@ y.close()
 #np.savetxt(K,sv0.Z,fmt='%.10e')
 #K.close()
 
-=======
-#############################################
-#writing bias into file
-b = sv.sv0.b
-b = np.reshape(b,(1,1));    
-bias = open("saved_data/bias/bias.txt",'w')
-np.savetxt(bias,b,fmt='%.12e')
-bias.close()
-#############################################
-#writing K into file
-K = open("saved_data/kernel/K.txt",'w')
-np.savetxt(K,sv0.Z,fmt='%.12e')
-K.close()
->>>>>>> 62b18c943fcdb99816b8b03fc707e32361a25637
+
 #############################################
 # CLASSIFYING SINGLE IMAGE 
 
