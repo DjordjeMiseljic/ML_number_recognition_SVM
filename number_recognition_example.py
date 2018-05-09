@@ -59,11 +59,11 @@ mnist = input_data.read_data_sets("MNIST_data/", one_hot=False)
 # TRAINIG + TESTING 
 
 train_num = 10000
-test_num = 1000
+test_num = 6000
 train_data = mnist.train.images[0:train_num]
 train_labels = mnist.train.labels[0:train_num] 
-test_data = mnist.test.images[0:test_num]
-test_labels = mnist.test.labels[0:test_num]
+test_data = mnist.test.images[5000:test_num]
+test_labels = mnist.test.labels[5000:test_num]
 
 #naked
 sv = svm_num_recognition(kernel = 'poly', C = 1.6, degree = 3, sigma = 1, threshold = 1e-7)
@@ -112,7 +112,7 @@ labels.close()
 mistakes = np.where(test_labels!=sv.classified)
 ## indexes where classified numbers differ from the labeled ones
 
-num=685
+num=5000+3502
 
 print("Normal classification")
 sv.svm_one_num_classification(mnist.test.images[num])

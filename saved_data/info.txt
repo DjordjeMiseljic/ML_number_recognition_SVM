@@ -1,7 +1,7 @@
 Kernel:
 poly
 Accuracy:
-97.33333333333333
+97.7
 Slack constant:
 1.6
 Degree:
@@ -13,4 +13,4 @@ Threshold:
 Number of training examples:
 10000
 Number of testing examples:
-300
+1000
