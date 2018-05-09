@@ -59,7 +59,7 @@ mnist = input_data.read_data_sets("MNIST_data/", one_hot=False)
 # TRAINIG + TESTING 
 
 train_num = 10000
-test_num = 300
+test_num = 1000
 train_data = mnist.train.images[0:train_num]
 train_labels = mnist.train.labels[0:train_num] 
 test_data = mnist.test.images[0:test_num]
@@ -95,7 +95,9 @@ y = open("saved_data/test_images/y.txt",'w')
 np.savetxt(y,test_data,fmt='%.12e')
 y.close()
 
-
+labels = open("saved_data/labels/labels.txt",'w')
+np.savetxt(labels,test_labels,fmt='%.12e')
+labels.close()
 
 #############################################
 #writing K into file
