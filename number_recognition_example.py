@@ -42,6 +42,34 @@ def deskew(img_single):
     return np.reshape(img,(1,784))
 
 ##############################################
+# CALCULATE MOMENTS MU02 and MU11
+
+def calc_moments(img_single):
+    img=np.reshape(img_single,(28,28))
+    SIZE=28
+    #calculate spatial moments
+    m00=0;
+    m10=0;
+    m01=0  
+    for i in range (0,SIZE):
+      for j in range (0,SIZE):
+        m00 += (img[i,j]) 
+        m10 += (img[i,j]*i)
+        m01 += (img[i,j]*j)
+    #calculate mass center
+    x_mc=m10/m00
+    y_mc=m01/m00
+    #calculate central moments
+    mu02=0;
+    mu11=0;
+    for i in range (0,SIZE):
+      for j in range (0,SIZE):
+        mu02 += (img[i,j]*(i-x_mc)**2) 
+        mu11 += (img[i,j]*(i-x_mc)*(j-y_mc))
+    print ("mu02", mu02)
+    print ("mu11", mu11)
+
+##############################################
 # DESKEW DATASET
 
 def deskew_dataset(dataset):
@@ -59,7 +87,7 @@ mnist = input_data.read_data_sets("MNIST_data/", one_hot=False)
 # TRAINIG + TESTING 
 
 train_num = 50
-test_num = 1
+test_num = 100
 train_data = mnist.train.images[0:train_num]
 train_labels = mnist.train.labels[0:train_num] 
 test_data = mnist.test.images[0:test_num]
@@ -107,11 +135,12 @@ bias.close()
 K = open("saved_data/kernel/K.txt",'w')
 np.savetxt(K,sv0.Z,fmt='%.12e')
 K.close()
+
+## indexes where classified numbers differ from the labeled ones
+mistakes = np.where(test_labels!=sv.classified)
+
 #############################################
 # CLASSIFYING SINGLE IMAGE 
-
-mistakes = np.where(test_labels!=sv.classified)
-## indexes where classified numbers differ from the labeled ones
 
 num=685
 
@@ -141,12 +170,21 @@ percentage[np.argmax(percentage)]
 
 #############################################
 # TESTING DESKEW FUNCTIONS
-    
-z=deskew(mnist.test.images[4699])
-sv.svm_one_num_classification(z)
+#Uz svo duzno postovanje prema ovome datasetu, slika sa indeksom 582
+#izgleda kao kad koca pokusa da nacrta svastiku.
+#Sada shvatam zasto je preciznost mala
+
+sii=420
+y=(mnist.test.images[sii])
+yy=np.reshape(y,(28,28))
+pt.imshow(yy,cmap='Greys_r')  
+m = cv2.moments(yy)
+calc_moments(y)
+m['mu02']
+m['mu11']
+ 
+skew = m['mu11']/m['mu02']
+
+z=deskew(mnist.test.images[sii])
 zz=np.reshape(z,(28,28))
 pt.imshow(zz,cmap='Greys_r')
-
-
-
-
