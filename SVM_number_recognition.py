@@ -111,8 +111,9 @@ class svm_num_recognition:
         
         # treba za upis u fajl
         self.num_test=np.shape(Ytest)[0]
-        
-        return self.svm_big_confusion_matrix(validation_labels)
+        percent = self.svm_big_confusion_matrix(validation_labels)
+        self.save_to_files(validation_images, validation_labels)
+        return percent
         
     def svm_one_num_classification(self, image):
         Ytest=np.reshape(image, (1,784))
@@ -157,11 +158,11 @@ class svm_num_recognition:
         
         print("big confusion matrix is:\n", self.big_confusion)
         self.percent =100*np.trace(self.big_confusion)/np.shape(validation_labels)[0]
-        self.save_to_files()
+        #self.save_to_files()
         print("percentage: {0:.2f}%".format(self.percent))
         return (self.percent)
 
-    def save_to_files(self):
+    def save_to_files(self, validation_images, validation_labels):
         #INFO
         info = open("saved_data/info.txt",'w')
         info.write("Kernel:\n")
@@ -310,6 +311,71 @@ class svm_num_recognition:
         targets9.close()
         
         
+        #BIASES
+        b = self.sv0.b
+        b = np.reshape(b,(1,1));    
+        bias0 = open("saved_data/bias/bias0.txt",'w')
+        np.savetxt(bias0,b,fmt='%.12e')
+        bias0.close()
         
+        b = self.sv1.b
+        b = np.reshape(b,(1,1));    
+        bias1 = open("saved_data/bias/bias1.txt",'w')
+        np.savetxt(bias1,b,fmt='%.12e')
+        bias1.close()
         
-    
+        b = self.sv2.b
+        b = np.reshape(b,(1,1));    
+        bias2 = open("saved_data/bias/bias2.txt",'w')
+        np.savetxt(bias2,b,fmt='%.12e')
+        bias2.close()
+        
+        b = self.sv3.b
+        b = np.reshape(b,(1,1));    
+        bias3 = open("saved_data/bias/bias3.txt",'w')
+        np.savetxt(bias3,b,fmt='%.12e')
+        bias3.close()
+        
+        b = self.sv4.b
+        b = np.reshape(b,(1,1));    
+        bias4 = open("saved_data/bias/bias4.txt",'w')
+        np.savetxt(bias4,b,fmt='%.12e')
+        bias4.close()
+        
+        b = self.sv5.b
+        b = np.reshape(b,(1,1));    
+        bias5 = open("saved_data/bias/bias5.txt",'w')
+        np.savetxt(bias5,b,fmt='%.12e')
+        bias5.close()
+        
+        b = self.sv6.b
+        b = np.reshape(b,(1,1));    
+        bias6 = open("saved_data/bias/bias6.txt",'w')
+        np.savetxt(bias6,b,fmt='%.12e')
+        bias6.close()
+        
+        b = self.sv7.b
+        b = np.reshape(b,(1,1));    
+        bias7 = open("saved_data/bias/bias7.txt",'w')
+        np.savetxt(bias7,b,fmt='%.12e')
+        bias7.close()
+        
+        b = self.sv8.b
+        b = np.reshape(b,(1,1));    
+        bias8 = open("saved_data/bias/bias8.txt",'w')
+        np.savetxt(bias8,b,fmt='%.12e')
+        bias8.close()
+        
+        b = self.sv9.b
+        b = np.reshape(b,(1,1));    
+        bias9 = open("saved_data/bias/bias9.txt",'w')
+        np.savetxt(bias9,b,fmt='%.12e')
+        bias9.close()
+        
+        y = open("saved_data/test_images/y.txt",'w')
+        np.savetxt(y,validation_images,fmt='%.12e')
+        y.close()
+        
+        labels = open("saved_data/labels/labels.txt",'w')
+        np.savetxt(labels,validation_labels,fmt='%.12e')
+        labels.close()

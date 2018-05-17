@@ -86,12 +86,12 @@ mnist = input_data.read_data_sets("MNIST_data/", one_hot=False)
 #############################################
 # TRAINIG + TESTING 
 
-train_num = 50
-test_num = 100
+train_num = 10000
+test_num = 6000
 train_data = mnist.train.images[0:train_num]
 train_labels = mnist.train.labels[0:train_num] 
-test_data = mnist.test.images[0:test_num]
-test_labels = mnist.test.labels[0:test_num]
+test_data = mnist.test.images[5000:test_num]
+test_labels = mnist.test.labels[5000:test_num]
 
 #naked
 sv = svm_num_recognition(kernel = 'poly', C = 1.6, degree = 3, sigma = 1, threshold = 1e-7)
@@ -103,12 +103,12 @@ sv = svm_num_recognition(kernel = 'poly', C = 1.6, degree = 3, sigma = 1, thresh
 sv.svm_train(deskew_dataset(train_data),train_labels)
 a = sv.svm_validation(deskew_dataset(test_data), test_labels)
 
-#train for one number
-sv0 = svm(kernel = 'poly', C = 1.6, degree = 3, sigma = 1, threshold = 1e-7)
-sv = svm_num_recognition(kernel = 'poly', C = 1.6, degree = 3, sigma = 1, threshold = 1e-7)
-sv.svm_train_1_num(train_data, train_labels, 0, sv0);
-sv0.classifier(test_data)
-np.shape(sv0.Z)
+##train for one number
+#sv0 = svm(kernel = 'poly', C = 1.6, degree = 3, sigma = 1, threshold = 1e-7)
+#sv = svm_num_recognition(kernel = 'poly', C = 1.6, degree = 3, sigma = 1, threshold = 1e-7)
+#sv.svm_train_1_num(train_data, train_labels, 0, sv0);
+#sv0.classifier(test_data)
+#np.shape(sv0.Z)
 
 
 
@@ -123,13 +123,10 @@ y = open("saved_data/test_images/y.txt",'w')
 np.savetxt(y,test_data,fmt='%.12e')
 y.close()
 
-#############################################
-#writing bias into file
-b = sv.sv0.b
-b = np.reshape(b,(1,1));    
-bias = open("saved_data/bias/bias.txt",'w')
-np.savetxt(bias,b,fmt='%.12e')
-bias.close()
+labels = open("saved_data/labels/labels.txt",'w')
+np.savetxt(labels,test_labels,fmt='%.12e')
+labels.close()
+
 #############################################
 #writing K into file
 K = open("saved_data/kernel/K.txt",'w')
@@ -142,7 +139,7 @@ mistakes = np.where(test_labels!=sv.classified)
 #############################################
 # CLASSIFYING SINGLE IMAGE 
 
-num=685
+num=5000+3502
 
 print("Normal classification")
 sv.svm_one_num_classification(mnist.test.images[num])
