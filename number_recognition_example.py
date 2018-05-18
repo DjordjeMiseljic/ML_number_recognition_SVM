@@ -51,23 +51,26 @@ def calc_moments(img_single):
     m00=0;
     m10=0;
     m01=0  
-    for i in range (0,SIZE):
-      for j in range (0,SIZE):
-        m00 += (img[i,j]) 
-        m10 += (img[i,j]*i)
-        m01 += (img[i,j]*j)
+    for x in range (0,SIZE):
+      for y in range (0,SIZE):
+        m00 += (img[y,x]) 
+        m10 += (img[y,x]*x)
+        m01 += (img[y,x]*y)
     #calculate mass center
     x_mc=m10/m00
     y_mc=m01/m00
+    print("x_mc",x_mc)
+    print("y_mc",y_mc)
     #calculate central moments
     mu02=0;
     mu11=0;
-    for i in range (0,SIZE):
-      for j in range (0,SIZE):
-        mu02 += (img[i,j]*(i-x_mc)**2) 
-        mu11 += (img[i,j]*(i-x_mc)*(j-y_mc))
+    for x in range (0,SIZE):
+      for y in range (0,SIZE):
+        mu02 += (img[y,x]*(y-y_mc)**2) 
+        mu11 += (img[y,x]*(x-x_mc)*(y-y_mc))
     print ("mu02", mu02)
     print ("mu11", mu11)
+    print ("skew", mu11/mu02)
 
 ##############################################
 # DESKEW DATASET
@@ -179,9 +182,47 @@ m = cv2.moments(yy)
 calc_moments(y)
 m['mu02']
 m['mu11']
- 
+m['m01']/m['m00']
+m['m10']/m['m00'] 
+
 skew = m['mu11']/m['mu02']
+M = np.float32([[1, skew, -0.5*28*skew], [0, 1, 0]])
+# Apply affine transform
+dskw_auto = cv2.warpAffine(yy, M, (28,28), flags=cv2.WARP_INVERSE_MAP | cv2.INTER_LINEAR)
+pt.imshow(dskw_auto,cmap='Greys_r')
+
+#cv2.invertAffineTransform(M,M)
+dskw_manual = np.copy(yy)
+for x in range(0,28):
+  for y in range(0,28):
+    xp=(M[0,0]*x +M[0,1]*y+ M[0,2])
+    yp=(M[1,0]*x +M[1,1]*y+ M[1,2])   
+    if (xp<27 and yp<27 and xp>=0 and yp>=0):
+       x1=(int(xp))
+       y1=(int(yp))
+       x2=(x1+1)
+       y2=(y1+1)
+       R1 = yy[y1,x1] + float((xp - x1))/(x2 - x1)*(yy[y1,x2] - yy[y1,x1])
+       #R1= 0.6       +    0.87/1   *   -0.06
+       R2 = yy[y2,x1] + float((xp - x1))/(x2 - x1)*(yy[y2,x2] - yy[y2,x1])
+       P = R2 + float(yp - y1)/(y2 - y1)*(R1 - R2)
+       if (P<0): 
+#         print("X:",xp,x1,x2)
+#         print("Y:",yp,y1,y2)
+#         print("11,21,12,22",yy[y1,x1],yy[y2,x1],yy[y1,x2],yy[y2,x2])
+#         print("R1",R1)
+#         print("R2",R2)
+#         print("P",P)
+         P=0
+       dskw_manual[y,x]=P
+    else:
+      dskw_manual[y,x]=0.0
+pt.imshow(dskw_manual,cmap='Greys_r')
+
+
+
 
 z=deskew(mnist.test.images[sii])
 zz=np.reshape(z,(28,28))
 pt.imshow(zz,cmap='Greys_r')
+
