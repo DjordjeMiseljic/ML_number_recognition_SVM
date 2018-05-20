@@ -57,8 +57,7 @@ class our_deskew:
             m01 += (img[y,x]*y)
         #calculate mass center
         x_mc=m10/m00
-        y_mc=m01/m00
-       
+        
         #calculate central moments
         self.mu02=0;
         self.mu11=0;
@@ -73,6 +72,7 @@ class our_deskew:
         img=np.reshape(image,(28,28))
         deskew_image = np.copy(img)
         skew  = self.mu11/self.mu02
+        
         M = np.float32([[1, skew, -0.5*28*skew], [0, 1, 0]])
         for x in range(0,28):
           for y in range(0,28):

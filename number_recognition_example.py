@@ -44,7 +44,7 @@ a = sv.svm_validation(deskew.deskew_dataset_auto(test_data), test_labels)
 sv = svm_num_recognition(kernel = 'poly', C = 1.6, degree = 3, sigma = 1, threshold = 1e-7)
 deskew = our_deskew()
 sv.svm_train(deskew.deskew_dataset_manual(train_data),train_labels)
-a = sv.svm_validation(deskew.deskew_dataset_manual(test_data), test_labels)
+a = sv.svm_validation((test_data), test_labels)
 
 ##train for one number
 #sv0 = svm(kernel = 'poly', C = 1.6, degree = 3, sigma = 1, threshold = 1e-7)
@@ -52,7 +52,9 @@ a = sv.svm_validation(deskew.deskew_dataset_manual(test_data), test_labels)
 #sv.svm_train_1_num(train_data, train_labels, 0, sv0);
 #sv0.classifier(test_data)
 #np.shape(sv0.Z)
-
+y = open("y.txt",'w')
+np.savetxt(y,(test_data),fmt='%.12e')
+y.close()
 
 ## indexes where classified numbers differ from the labeled ones
 mistakes = np.where(test_labels!=sv.classified)
@@ -60,7 +62,7 @@ mistakes = np.where(test_labels!=sv.classified)
 #############################################
 # CLASSIFYING SINGLE IMAGE 
 
-num=5000+3502
+num=5054
 
 print("Normal classification")
 sv.svm_one_num_classification(mnist.test.images[num])
@@ -69,8 +71,8 @@ pt.figure()
 pt.imshow(d,cmap='Greys_r')
 
 print("Classification with deskew")
-sv.svm_one_num_classification(deskew(mnist.test.images[num]))
-d=np.reshape(deskew(mnist.test.images[num]),(28,28)) 
+sv.svm_one_num_classification(deskew.deskew_manual(mnist.test.images[num]))
+d=np.reshape(deskew.deskew_manual(mnist.test.images[num]),(28,28)) 
 pt.figure()
 pt.imshow(d,cmap='Greys_r')
 
@@ -93,7 +95,7 @@ percentage[np.argmax(percentage)]
 #Sada shvatam zasto je preciznost mala
 
 
-sii=420
+sii=421
 y=(mnist.test.images[sii])
 yy=np.reshape(y,(28,28))
 pt.imshow(yy,cmap='Greys_r')  
@@ -113,7 +115,7 @@ pt.imshow(dskw_auto,cmap='Greys_r')
 
 
 ###testing deskew class "our_deskew.py"
-sii=420  
+sii=5001  
 y=(mnist.test.images[sii])  
 image=np.reshape(y,(28,28))
 pt.imshow(image,cmap='Greys_r')
@@ -123,8 +125,8 @@ image=np.reshape(image,(28,28))
 pt.imshow(image,cmap='Greys_r')
 
 
-sii=420
-y=(mnist.test.images[sii:422])
+sii=5000
+y=(mnist.test.images[sii:5005])
 image = open("4.txt",'w')
 np.savetxt(image,y,fmt='%.12e')
 image.close()

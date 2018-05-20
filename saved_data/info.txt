@@ -1,7 +1,7 @@
 Kernel:
 poly
 Accuracy:
-98.0
+65.0
 Slack constant:
 1.6
 Degree:
