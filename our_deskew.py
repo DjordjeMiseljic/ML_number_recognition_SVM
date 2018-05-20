@@ -69,7 +69,7 @@ class our_deskew:
         
         
     def deskew_manual(self, image):
-        self.calc_moments(image);
+        self.calc_moments(image)
         img=np.reshape(image,(28,28))
         deskew_image = np.copy(img)
         skew  = self.mu11/self.mu02
@@ -90,6 +90,8 @@ class our_deskew:
                if (P<0):      
                  P=0
                deskew_image[y,x]=P
+               
             else:
               deskew_image[y,x]=0.0
+           
         return np.reshape(deskew_image,(1,784))

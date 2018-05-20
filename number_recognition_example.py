@@ -22,8 +22,8 @@ mnist = input_data.read_data_sets("MNIST_data/", one_hot=False)
 #############################################
 # TRAINIG + TESTING 
 
-train_num = 1000
-test_num = 6000
+train_num = 10000
+test_num = 5100
 train_data = mnist.train.images[0:train_num]
 train_labels = mnist.train.labels[0:train_num] 
 test_data = mnist.test.images[5000:test_num]
@@ -113,15 +113,27 @@ pt.imshow(dskw_auto,cmap='Greys_r')
 
 
 ###testing deskew class "our_deskew.py"
-sii=420
-y=(mnist.test.images[sii])
-deskew_test = our_deskew();
+sii=420  
+y=(mnist.test.images[sii])  
+image=np.reshape(y,(28,28))
+pt.imshow(image,cmap='Greys_r')
+deskew_test = our_deskew(); 
 image = deskew_test.deskew_manual(y)
 image=np.reshape(image,(28,28))
 pt.imshow(image,cmap='Greys_r')
 
 
-z=deskew(mnist.test.images[sii])
-zz=np.reshape(z,(28,28))
-pt.imshow(zz,cmap='Greys_r')
+sii=420
+y=(mnist.test.images[sii:422])
+image = open("4.txt",'w')
+np.savetxt(image,y,fmt='%.12e')
+image.close()
+
+#### testing picture deskewed in c++
+number = np.zeros([1,784]) 
+file_handle = open('number.txt', 'r') 
+for i in range (0,784): 
+    number[0,i] = float(file_handle.readline() ) 
+number = np.reshape(number,(28,28)); 
+pt.imshow(number,cmap='Greys_r')     
 
