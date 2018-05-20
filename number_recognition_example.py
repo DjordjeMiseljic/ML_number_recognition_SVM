@@ -23,7 +23,7 @@ mnist = input_data.read_data_sets("MNIST_data/", one_hot=False)
 # TRAINIG + TESTING 
 
 train_num = 10000
-test_num = 5100
+test_num = 10000
 train_data = mnist.train.images[0:train_num]
 train_labels = mnist.train.labels[0:train_num] 
 test_data = mnist.test.images[5000:test_num]
@@ -44,17 +44,16 @@ a = sv.svm_validation(deskew.deskew_dataset_auto(test_data), test_labels)
 sv = svm_num_recognition(kernel = 'poly', C = 1.6, degree = 3, sigma = 1, threshold = 1e-7)
 deskew = our_deskew()
 sv.svm_train(deskew.deskew_dataset_manual(train_data),train_labels)
-a = sv.svm_validation((test_data), test_labels)
-
+a = sv.svm_validation(deskew.deskew_dataset_auto(test_data), test_labels)
+a = sv.svm_validation(deskew.deskew_dataset_manual(test_data), test_labels)
+a = sv.svm_validation((test_data), test_labels)# with this we get files for c++ code
 ##train for one number
 #sv0 = svm(kernel = 'poly', C = 1.6, degree = 3, sigma = 1, threshold = 1e-7)
 #sv = svm_num_recognition(kernel = 'poly', C = 1.6, degree = 3, sigma = 1, threshold = 1e-7)
 #sv.svm_train_1_num(train_data, train_labels, 0, sv0);
 #sv0.classifier(test_data)
 #np.shape(sv0.Z)
-y = open("y.txt",'w')
-np.savetxt(y,(test_data),fmt='%.12e')
-y.close()
+
 
 ## indexes where classified numbers differ from the labeled ones
 mistakes = np.where(test_labels!=sv.classified)
